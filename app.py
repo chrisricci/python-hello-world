@@ -127,7 +127,7 @@ def index():
     return "%s %s, %s - Update\n" % (timestamp, greeting, name)
 
 @app.route('/test')
-def index():
+def test():
     # do_cool_stuff()
     return "hello\n" 
 
