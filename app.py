@@ -126,6 +126,11 @@ def index():
 
     return "%s %s, %s - Update\n" % (timestamp, greeting, name)
 
+@app.route('/test')
+def index():
+    # do_cool_stuff()
+    return "hello\n" 
+
 @trace()
 def getGreeting():
     try: 
