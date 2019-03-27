@@ -4,6 +4,9 @@ metadata:
   name: hello-world
 spec:
   host: hello-world-service
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
   subsets:
   - name: production
     labels:

@@ -1,0 +1,43 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus-name: hello-world
+  name: prometheus-rule
+  namespace: hello-world
+spec:
+  groups:
+    - name: hello-world-latency-rules
+      rules:
+        - alert: HelloWorldLatency
+          annotations:
+            description: >-
+              `{{ $labels.instance }}` has a median request latency above 1s
+              (current value: `{{ $value }}`s)
+            summary: 'High request latency on `{{ $labels.instance }}`'
+          expr: >-
+            rate(flask_request_latency_seconds_sum{job="hello-world-service"}[10s])
+            /
+            rate(flask_request_latency_seconds_count{job="hello-world-service"}[10s])
+            > 1
+        - alert: NameServiceLatency
+          annotations:
+            description: >-
+              `{{ $labels.instance }}` has a median request latency above 1s
+              (current value: `{{ $value }}`s)
+            summary: 'High request latency on `{{ $labels.instance }}`'
+          expr: >-
+            rate(flask_request_latency_seconds_sum{job="name-service"}[10s]) /
+            rate(flask_request_latency_seconds_count{job="name-service"}[10s]) >
+            1
+        - alert: GreeterServiceLatency
+          annotations:
+            description: >-
+              `{{ $labels.instance }}` has a median request latency above 1s
+              (current value: `{{ $value }}`s)
+            summary: 'High request latency on `{{ $labels.instance }}`'
+          expr: >-
+            rate(flask_request_latency_seconds_sum{job="greeter-service"}[10s])
+            /
+            rate(flask_request_latency_seconds_count{job="greeter-service"}[10s])
+            > 1
